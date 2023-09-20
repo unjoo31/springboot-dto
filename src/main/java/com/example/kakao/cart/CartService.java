@@ -19,8 +19,9 @@ public class CartService {
     private final OptionJPARepository optionJPARepository;
 
     // (기능3) 장바구니 조회
-    public CartResponse.FindAllByUserDTO findAllByUser(User sessionUser) {
-        return null;
+    public CartResponse.FindAllByUserDTO findAllByUser() {
+        List<Cart> cartLists = cartJPARepository.findByUserIdOrderByOptionIdAsc(1);
+        return new CartResponse.FindAllByUserDTO(cartLists);
     }
 
     @Transactional
