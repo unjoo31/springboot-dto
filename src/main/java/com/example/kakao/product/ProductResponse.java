@@ -33,7 +33,7 @@ public class ProductResponse {
     }
 
     // (기능2) 상품 상세보기
-    @Setter
+    @Setter @Getter
     public static class FindByIdDTO {
         private Integer productId;
         private String productName;

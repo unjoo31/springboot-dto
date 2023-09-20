@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderRestController {
 
     private final HttpSession session;
-    private OrderService orderService;
+    private final OrderService orderService;
 
     // 결재하기 - (주문 인서트)
     @PostMapping("/orders/save")
@@ -35,7 +35,9 @@ public class OrderRestController {
     // (기능5) 주문결과 확인
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> findById(@PathVariable Integer id) {
-        return null;
+        OrderResponse.FindByIdDTO responseDTOs = orderService.findById(id);
+
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTOs));
     }
 
     // (기능4) 주문상품 정보조회 (유저별) - 장바구니 내역 가져오기

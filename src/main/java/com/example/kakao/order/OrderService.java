@@ -16,10 +16,11 @@ import com.example.kakao.user.User;
 
 import lombok.RequiredArgsConstructor;
 
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class OrderService {
+
     private final ItemJPARepository ItemJPARepository;
     private final OrderJPARepository orderJPARepository;
     private final CartJPARepository cartJPARepository;
@@ -31,8 +32,11 @@ public class OrderService {
 
     
     // (기능5) 주문결과 확인
-    public OrderResponse.FindByIdDTO findById(int id) {
-        return null;
+    public OrderResponse.FindByIdDTO findById(Integer id) {
+        Order orderPS = orderJPARepository.findById(id).orElseThrow(()-> new Exception404("주문을 찾을 수 없습니다 : " + id));
+        List<Item> items = ItemJPARepository.findAllByOrderId(id);
+
+        return new OrderResponse.FindByIdDTO(orderPS, items);
     }
 
     @Transactional
