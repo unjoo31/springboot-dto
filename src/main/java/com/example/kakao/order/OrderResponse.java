@@ -3,6 +3,7 @@ package com.example.kakao.order;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.kakao.cart.Cart;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.product.Product;
 
@@ -17,7 +18,32 @@ public class OrderResponse {
     @Getter
     @Setter
     public static class FindAllByUserDTO {
+        private Integer totalPrice;
+        private List<CartDTO> carts;
 
+        public FindAllByUserDTO(List<Cart> cartLists) {
+            this.totalPrice = cartLists.stream()
+                                            .mapToInt(cart -> cart.getPrice()).sum();
+            this.carts = cartLists.stream()
+                                        .map(cart -> new CartDTO(cart))
+                                        .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public static class CartDTO{
+            private Integer cartId;
+            private String optionName;
+            private Integer price;
+            private Integer quantity;
+
+            public CartDTO(Cart cart) {
+                this.cartId = cart.getId();
+                this.optionName = cart.getOption().getOptionName();
+                this.price = cart.getPrice();
+                this.quantity = cart.getQuantity();
+            }           
+        }
     }
 
     // (기능5) 주문결과 확인

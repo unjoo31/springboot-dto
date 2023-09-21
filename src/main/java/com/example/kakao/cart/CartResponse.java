@@ -17,7 +17,7 @@ public class CartResponse {
     @Getter
     @Setter
     public static class FindAllByUserDTO {
-       private List<ProductDTO> products;
+        private List<ProductDTO> products;
         private Integer totalPrice;
 
         public FindAllByUserDTO(List<Cart> cartList) {
@@ -26,7 +26,7 @@ public class CartResponse {
                                         .map(product -> new ProductDTO(cartList, product))
                                         .collect(Collectors.toList());
             this.totalPrice = cartList.stream()
-                                        .mapToInt(cart -> cart.getOption().getPrice() * cart.getQuantity()).sum();
+                                        .mapToInt(cart -> cart.getPrice()).sum();
         }
 
         @Getter

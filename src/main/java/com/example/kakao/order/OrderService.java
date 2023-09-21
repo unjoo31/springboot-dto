@@ -10,6 +10,7 @@ import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
+import com.example.kakao.cart.CartResponse;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.order.item.ItemJPARepository;
 import com.example.kakao.user.User;
@@ -26,8 +27,9 @@ public class OrderService {
     private final CartJPARepository cartJPARepository;
 
     // (기능4) 주문상품 정보조회 (유저별) - CartJPARepository의 정보를 조회해야함
-    public OrderResponse.FindAllByUserDTO findAllByUser(User sessionUser) {
-        return null;
+    public OrderResponse.FindAllByUserDTO findAllByUser(Integer id) {
+        List<Cart> cartLists = cartJPARepository.findAllByUserId(1);
+        return new OrderResponse.FindAllByUserDTO(cartLists);
     }
 
     
