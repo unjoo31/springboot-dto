@@ -1,9 +1,10 @@
 package com.example.kakao.user;
 
 import javax.servlet.http.HttpSession;
-
+import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,14 +23,14 @@ public class UserRestController {
 
     // 회원가입
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO requestDTO) {
+    public ResponseEntity<?> join(@Valid UserRequest.JoinDTO requestDTO, BindingResult bindingResult) {
         userService.join(requestDTO);
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserRequest.LoginDTO requestDTO) {
+    public ResponseEntity<?> login(@Valid UserRequest.LoginDTO requestDTO, BindingResult bindingResult) {
         User sessionUser = userService.login(requestDTO);
         session.setAttribute("sessionUser", sessionUser);
         return ResponseEntity.ok().body(ApiUtils.success(null));
