@@ -12,7 +12,7 @@ import lombok.ToString;
 
 public class CartResponse {
 
-    // (기능3) 장바구니 조회
+    // (기능3) 장바구니 조회 : 전체는 json 오브젝트, products는 json 리스트
     @ToString
     @Getter
     @Setter
@@ -31,12 +31,12 @@ public class CartResponse {
 
         @Getter
         @Setter
-        public class ProductDTO {
+        class ProductDTO {
             private Integer productId;
             private String productName;
             private List<CartDTO> carts;
 
-            public ProductDTO(List<Cart> cartList, Product product) {
+            ProductDTO(List<Cart> cartList, Product product) {
                 this.productId = product.getId();
                 this.productName = product.getProductName();
                 this.carts = cartList.stream()
@@ -46,13 +46,13 @@ public class CartResponse {
             }
 
             @Getter @Setter
-            public class CartDTO {
+            class CartDTO {
                 private Integer cartsId;
                 private OptionDTO option;
                 private Integer cartsQuantity;
                 private Integer cartsPrice;
 
-                public CartDTO(Cart cart) {
+                CartDTO(Cart cart) {
                     this.cartsId = cart.getId();
                     this.option = new OptionDTO(cart.getOption());
                     this.cartsQuantity = cart.getQuantity();
@@ -60,11 +60,11 @@ public class CartResponse {
                 }
 
                 @Getter @Setter
-                public class OptionDTO {
+                class OptionDTO {
                     private Integer optionId;
                     private String optionName;
 
-                    public OptionDTO(Option option) {
+                    OptionDTO(Option option) {
                         this.optionId = option.getId();
                         this.optionName = option.getOptionName();
                     }
